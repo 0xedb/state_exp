@@ -1,0 +1,8 @@
+{
+  "name": "state_exp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/0xedb/state_exp.git",
+  "author": "0xedb <edohbruno@gmail.com>",
+  "license": "MIT"
+}
