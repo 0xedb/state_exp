@@ -1,4 +1,4 @@
-export const create = () => {
+export const create = (createState) => {
   let state;
 
   const listeners = new Set();
@@ -7,15 +7,36 @@ export const create = () => {
 
   const getState = () => state;
 
-  const subscribeWithSelector = () => {};
+  const subscribeWithSelector = (
+    listener,
+    selector,
+    equalityFn = Object.is
+  ) => {
+    const current = selector(state);
 
-  const subscribe = () => {};
+    function listenerToAdd() {
+      const next = selector(state);
+      
+    }
+
+    listeners.add(listenerToAdd);
+    return () => listeners.delete(listenerToAdd);
+  };
+
+  const subscribe = (listener, selector, equalityFn) => {
+    if (selector || equalityFn) {
+      return subscribeWithSelector(listeners, selector, equalityFn);
+    }
+
+    listeners.add(listener);
+    return () => listeners.delete(listener);
+  };
 
   const destroy = () => listeners.clear();
 
   const api = { setState, getState, subscribe, destroy };
 
-  // state = createState()
+  state = createState(setState, getState, api);
 
   return api;
 };
